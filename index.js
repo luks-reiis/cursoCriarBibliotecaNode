@@ -1,10 +1,19 @@
+import fs from 'fs';
 import chalk from "chalk";
 
-console.log(chalk.blue("olá mundo"));
+function trataErro(erro) {
+  console.log(erro);
+  throw new Error(chalk.red(erro.code, 'Não há arquivo no diretório.'))
+}
 
-console.log(
-  "São geralmente recuperados a partir de um objeto [FileList](https://developer.mozilla.org/pt-BR/docs/Web/API/FileList) que é retornado como resultado da seleção, pelo usuário, de arquivos através do elemento [<input>](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/Input), a partir do "
-);
-console.log(
-  "São geralmente recuperados a partir de um objeto [FileList](https://developer.mozilla.org/pt-BR/docs/Web/API/FileList) que é retornado como resultado da seleção, pelo usuário, de arquivos através do elemento [<input>](https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/Input), a partir do "
-);
+function pegaArquivo(caminhoArquivo) {
+  const encoding = 'utf-8';
+  fs.readFile(caminhoArquivo, encoding, (erro, texto) => {
+    if (erro) {
+      trataErro(erro);
+    }
+    console.log(chalk.green(texto));
+  })
+}
+
+pegaArquivo('./arquivos/texto.md');
