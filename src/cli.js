@@ -5,13 +5,12 @@ import listaValidada from "./http-validacao.js";
 
 const caminho = process.argv;
 
-function imprimeLista(valida, resultado, nomeArquivo = "") {
-
-  if (valida){
+async function imprimeLista(valida, resultado, nomeArquivo = "") {
+  if (valida) {
     console.log(
       chalk.yellow("Lista validada"),
       chalk.black.bgGreen(nomeArquivo),
-      listaValidada(resultado)
+      await listaValidada(resultado)
     );
   } else {
     console.log(
@@ -24,7 +23,7 @@ function imprimeLista(valida, resultado, nomeArquivo = "") {
 
 async function processaTexto(argumentos) {
   const caminho = argumentos[2];
-  const valida = argumentos[3] === '--valida';
+  const valida = argumentos[3] === "--valida";
 
   try {
     fs.lstatSync(caminho);
